@@ -1,0 +1,32 @@
+#######################################
+# Syntax Coloring Map For Hyperion_LCDKeyPad
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+LCDKeyPad	KEYWORD1	LCDKeyPad
+KeyType	KEYWORD1	KeyType
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+backlightOn	KEYWORD2
+backlightOff	KEYWORD2
+toggleBacklight	KEYWORD2
+resumeAndYield	KEYWORD2
+getKey	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+NONE	LITERAL1
+RIGHT	LITERAL1
+UP	LITERAL1
+DOWN	LITERAL1
+LEFT	LITERAL1
+SELECT	LITERAL1
