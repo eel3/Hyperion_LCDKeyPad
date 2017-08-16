@@ -32,11 +32,11 @@ private:
     PUSH_TO_PUSH,
   };
 
-  bool mBacklightOn;
-  KeyState mKeyState;
-  KeyType mKeyCandidate;
-  KeyType mKeyConfirmed;
-  unsigned long mKeyConfirmTime;
+  bool backlightIsOn;
+  KeyState keyState;
+  KeyType keyCandidate;
+  KeyType keyConfirmed;
+  unsigned long keyConfirmTime;
 
   static KeyType readKey() noexcept;
 

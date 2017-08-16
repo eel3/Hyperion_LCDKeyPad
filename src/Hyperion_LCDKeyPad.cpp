@@ -63,49 +63,49 @@ KeyType LCDKeyPadClass::readKey() noexcept
 
 void LCDKeyPadClass::onKeyInputTrigger() noexcept
 {
-  assert((mKeyState == KeyState::RELEASE) ||
-         (mKeyState == KeyState::PUSH));
+  assert((keyState == KeyState::RELEASE) ||
+         (keyState == KeyState::PUSH));
 
   const auto key = readKey();
-  if (key == mKeyConfirmed) {
+  if (key == keyConfirmed) {
     return;
   }
-  mKeyState =
-    (mKeyState == KeyState::RELEASE) ? KeyState::RELEASE_TO_PUSH :
-    (key == KeyType::NONE)           ? KeyState::PUSH_TO_RELEASE :
-                                       KeyState::PUSH_TO_PUSH;
-  mKeyCandidate = key;
-  mKeyConfirmTime = millis() + CHATTER_THRESHOLD_MILLIS;
+  keyState =
+    (keyState == KeyState::RELEASE) ? KeyState::RELEASE_TO_PUSH :
+    (key == KeyType::NONE)          ? KeyState::PUSH_TO_RELEASE :
+                                      KeyState::PUSH_TO_PUSH;
+  keyCandidate = key;
+  keyConfirmTime = millis() + CHATTER_THRESHOLD_MILLIS;
 }
 
 void LCDKeyPadClass::onKeyInputConfirm(const KeyState onOKState,
                                        const KeyState onNGState) noexcept
 {
-  assert((mKeyState == KeyState::RELEASE_TO_PUSH) ||
-         (mKeyState == KeyState::PUSH_TO_RELEASE) ||
-         (mKeyState == KeyState::PUSH_TO_PUSH));
+  assert((keyState == KeyState::RELEASE_TO_PUSH) ||
+         (keyState == KeyState::PUSH_TO_RELEASE) ||
+         (keyState == KeyState::PUSH_TO_PUSH));
 
   const auto now = millis();
-  if ((now - mKeyConfirmTime) < 0) {
+  if ((now - keyConfirmTime) < 0) {
     return;
   }
 
   const auto key = readKey();
-  if (key == mKeyCandidate) {
-    mKeyState = onOKState;
-    mKeyConfirmed = key;
+  if (key == keyCandidate) {
+    keyState = onOKState;
+    keyConfirmed = key;
   } else {
-    mKeyState = onNGState;
-    mKeyCandidate = mKeyConfirmed;
+    keyState = onNGState;
+    keyCandidate = keyConfirmed;
   }
 }
 
 LCDKeyPadClass::LCDKeyPadClass() noexcept :
     LiquidCrystal(PIN_RS, PIN_ENABLE, PIN_DB4, PIN_DB5, PIN_DB6, PIN_DB7),
-    mBacklightOn(true),
-    mKeyState(KeyState::RELEASE),
-    mKeyCandidate(KeyType::NONE),
-    mKeyConfirmed(KeyType::NONE)
+    backlightIsOn(true),
+    keyState(KeyState::RELEASE),
+    keyCandidate(KeyType::NONE),
+    keyConfirmed(KeyType::NONE)
 {
   /*EMPTY*/
 }
@@ -120,20 +120,20 @@ void LCDKeyPadClass::begin(const uint8_t cols,
 
 void LCDKeyPadClass::backlightOn() noexcept
 {
-  mBacklightOn = true;
+  backlightIsOn = true;
   pinMode(PIN_BACKLIGHT, INPUT);
 }
 
 void LCDKeyPadClass::backlightOff() noexcept
 {
-  mBacklightOn = false;
+  backlightIsOn = false;
   pinMode(PIN_BACKLIGHT, OUTPUT);
   digitalWrite(PIN_BACKLIGHT, LOW);
 }
 
 void LCDKeyPadClass::toggleBacklight() noexcept
 {
-  if (mBacklightOn) {
+  if (backlightIsOn) {
     backlightOff();
   } else {
     backlightOn();
@@ -142,7 +142,7 @@ void LCDKeyPadClass::toggleBacklight() noexcept
 
 void LCDKeyPadClass::resumeAndYield() noexcept
 {
-  switch (mKeyState) {
+  switch (keyState) {
   case KeyState::RELEASE:
     onKeyInputTrigger();
     break;
@@ -163,7 +163,7 @@ void LCDKeyPadClass::resumeAndYield() noexcept
 
 KeyType LCDKeyPadClass::getKey() const noexcept
 {
-  return mKeyConfirmed;
+  return keyConfirmed;
 }
 
 } // namespace hyperion_lcdkeypad
