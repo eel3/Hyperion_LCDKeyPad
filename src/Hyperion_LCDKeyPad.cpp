@@ -86,7 +86,7 @@ void LCDKeyPadClass::onKeyInputConfirm(const KeyState onOKState,
          (keyState == KeyState::PUSH_TO_PUSH));
 
   const auto now = millis();
-  if ((now - keyConfirmTime) < 0) {
+  if (static_cast<long>(now - keyConfirmTime) < 0) {
     return;
   }
 
