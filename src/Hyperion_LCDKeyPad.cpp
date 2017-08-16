@@ -22,7 +22,7 @@ namespace {
   constexpr uint8_t PIN_BACKLIGHT = 10;
   constexpr uint8_t PIN_KEYIN = A0;
 
-  constexpr unsigned long CHATTER_THRESHOLD_MILLIS = 50;
+  constexpr unsigned long DEBOUNCE_THRESHOLD_MILLIS = 50;
 
   constexpr int KEY_IN_THRESHOLD_RIGHT = 65;      //   0 -  130
   constexpr int KEY_IN_THRESHOLD_UP = 215;        // 130 -  300
@@ -75,7 +75,7 @@ void LCDKeyPadClass::onKeyInputTrigger() noexcept
     (key == KeyType::NONE)          ? KeyState::PUSH_TO_RELEASE :
                                       KeyState::PUSH_TO_PUSH;
   keyCandidate = key;
-  keyConfirmTime = millis() + CHATTER_THRESHOLD_MILLIS;
+  keyConfirmTime = millis() + DEBOUNCE_THRESHOLD_MILLIS;
 }
 
 void LCDKeyPadClass::onKeyInputConfirm(const KeyState onOKState,
