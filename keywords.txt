@@ -8,11 +8,13 @@
 
 LCDKeyPad	KEYWORD1	LCDKeyPad
 KeyType	KEYWORD1	KeyType
+KeyInputCallback	KEYWORD1	KeyInputCallback
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
+setKeyInputCallback	KEYWORD2
 begin	KEYWORD2
 backlightOn	KEYWORD2
 backlightOff	KEYWORD2

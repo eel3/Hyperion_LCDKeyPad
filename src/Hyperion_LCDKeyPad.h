@@ -2,7 +2,7 @@
 /**
  * @brief   Library for Hyperion Arduino LCD KeyPad Shield (HP-AMO-LCDSH).
  * @author  eel3
- * @date    2017-08-16
+ * @date    2017-08-25
  */
 /* ********************************************************************** */
 
@@ -22,6 +22,8 @@ enum class KeyType {
   SELECT
 };
 
+using KeyInputCallback = void (*)(const KeyType, void *);
+
 class LCDKeyPadClass : public LiquidCrystal {
 private:
   enum class KeyState {
@@ -38,6 +40,10 @@ private:
   KeyType keyConfirmed;
   unsigned long keyConfirmTime;
 
+  KeyInputCallback keyInputCallback;
+  void *userData;
+
+  static void dummyKeyInputCallback(const KeyType, void *) noexcept;
   static KeyType readKey() noexcept;
 
   void onKeyInputTrigger() noexcept;
@@ -49,6 +55,9 @@ public:
   virtual ~LCDKeyPadClass() = default;
   LCDKeyPadClass(const LCDKeyPadClass&) = delete;
   LCDKeyPadClass& operator=(const LCDKeyPadClass&) = delete;
+
+  void setKeyInputCallback(const KeyInputCallback callback,
+                           void * const data = nullptr) noexcept;
 
   void begin(const uint8_t cols = 16,
              const uint8_t rows = 2,
@@ -67,6 +76,7 @@ extern LCDKeyPadClass LCDKeyPad;
 } // namespace hyperion_lcdkeypad
 
 using hyperion_lcdkeypad::KeyType;
+using hyperion_lcdkeypad::KeyInputCallback;
 using hyperion_lcdkeypad::LCDKeyPad;
 
 #endif /* ndef HYPERION_LCD_KEYPAD_H */

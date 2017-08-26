@@ -8,25 +8,7 @@
 
 #include <Hyperion_LCDKeyPad.h>
 
-static KeyType prevKey;
-
-void setup() {
-  LCDKeyPad.begin();
-  prevKey = KeyType::NONE;
-
-  LCDKeyPad.home();
-  LCDKeyPad.print("[Demo 1]");
-}
-
-void loop() {
-  LCDKeyPad.resumeAndYield();
-
-  const auto key = LCDKeyPad.getKey();
-  if (key == prevKey) {
-    return;
-  }
-  prevKey = key;
-
+static void keyInputCallback(const KeyType key, void *) {
   const char *text = nullptr;
   switch (key) {
   case KeyType::RIGHT:
@@ -56,4 +38,16 @@ void loop() {
   if (key == KeyType::SELECT) {
     LCDKeyPad.toggleBacklight();
   }
+}
+
+void setup() {
+  LCDKeyPad.setKeyInputCallback(keyInputCallback);
+  LCDKeyPad.begin();
+
+  LCDKeyPad.home();
+  LCDKeyPad.print("[Demo 2]");
+}
+
+void loop() {
+  LCDKeyPad.resumeAndYield();
 }

@@ -3,7 +3,7 @@ Hyperion_LCDKeyPad
 
 Arduino library allows communication with Hyperion LCD KeyPad Shield (HP-AMO-LCDSH).
 
-This library allows an Arduino/Genuino board to control Hyperion LCD KeyPad Shield (HP-AMO-LCDSH).
+This library allows an Arduino/Genuino board to control Hyperion LCD KeyPad Shield.
 
 License
 -------
@@ -13,7 +13,7 @@ zlib License.
 Development environments
 ------------------------
 
-* Arduino IDE 1.8.3.
+* Arduino IDE 1.8.4.
 * Arduino UNO R3.
 
 Set up
@@ -35,4 +35,4 @@ git clone git@github.com:eel3/Hyperion_LCDKeyPad.git
 Usage
 -----
 
-See [examples/LCDKeyPadDemo](examples/LCDKeyPadDemo).
+See [examples/KeyCallbackDemo](examples/KeyCallbackDemo).
