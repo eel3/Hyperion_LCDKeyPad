@@ -13,22 +13,22 @@
 #include <assert.h>
 
 namespace {
-  constexpr uint8_t PIN_DB4 = 4;
-  constexpr uint8_t PIN_DB5 = 5;
-  constexpr uint8_t PIN_DB6 = 6;
-  constexpr uint8_t PIN_DB7 = 7;
-  constexpr uint8_t PIN_RS = 8;
-  constexpr uint8_t PIN_ENABLE = 9;
-  constexpr uint8_t PIN_BACKLIGHT = 10;
-  constexpr uint8_t PIN_KEYIN = A0;
+  constexpr uint8_t PIN_DB4 { 4 };
+  constexpr uint8_t PIN_DB5 { 5 };
+  constexpr uint8_t PIN_DB6 { 6 };
+  constexpr uint8_t PIN_DB7 { 7 };
+  constexpr uint8_t PIN_RS { 8 };
+  constexpr uint8_t PIN_ENABLE { 9 };
+  constexpr uint8_t PIN_BACKLIGHT { 10 };
+  constexpr uint8_t PIN_KEYIN { A0 };
 
-  constexpr unsigned long DEBOUNCE_THRESHOLD_MILLIS = 50;
+  constexpr unsigned long DEBOUNCE_THRESHOLD_MILLIS { 50 };
 
-  constexpr int KEY_IN_THRESHOLD_RIGHT = 65;      //   0 -  130
-  constexpr int KEY_IN_THRESHOLD_UP = 215;        // 130 -  300
-  constexpr int KEY_IN_THRESHOLD_DOWN = 390;      // 300 -  480
-  constexpr int KEY_IN_THRESHOLD_LEFT = 600;      // 480 -  720
-  constexpr int KEY_IN_THRESHOLD_SELECT = 870;    // 720 - 1023
+  constexpr int KEY_IN_THRESHOLD_RIGHT { 65 };      //   0 -  130
+  constexpr int KEY_IN_THRESHOLD_UP { 215 };        // 130 -  300
+  constexpr int KEY_IN_THRESHOLD_DOWN { 390 };      // 300 -  480
+  constexpr int KEY_IN_THRESHOLD_LEFT { 600 };      // 480 -  720
+  constexpr int KEY_IN_THRESHOLD_SELECT { 870 };    // 720 - 1023
 } // namespace
 
 namespace hyperion_lcdkeypad {
@@ -46,7 +46,7 @@ KeyType LCDKeyPadClass::readKey() noexcept
     int threshold;
     KeyType key;
   };
-  static constexpr KeyMap KEY_MAP[] = {
+  static constexpr KeyMap KEY_MAP[] {
 #define MAPSYM(sym) { KEY_IN_THRESHOLD_##sym, KeyType::sym, }
     MAPSYM(RIGHT),
     MAPSYM(UP),
@@ -55,10 +55,10 @@ KeyType LCDKeyPadClass::readKey() noexcept
     MAPSYM(SELECT),
 #undef MAPSYM
   };
-  static constexpr size_t KEY_MAP_SIZE = sizeof(KEY_MAP) / sizeof(KEY_MAP[0]);
+  static constexpr size_t KEY_MAP_SIZE { sizeof(KEY_MAP) / sizeof(KEY_MAP[0]) };
 
   const auto keyInValue = analogRead(PIN_KEYIN);
-  for (size_t i = 0; i < KEY_MAP_SIZE; i++) {
+  for (size_t i { 0 }; i < KEY_MAP_SIZE; i++) {
     if (keyInValue < KEY_MAP[i].threshold) {
       return KEY_MAP[i].key;
     }
@@ -108,12 +108,12 @@ void LCDKeyPadClass::onKeyInputConfirm(const KeyState onOKState,
 
 LCDKeyPadClass::LCDKeyPadClass() noexcept :
     LiquidCrystal(PIN_RS, PIN_ENABLE, PIN_DB4, PIN_DB5, PIN_DB6, PIN_DB7),
-    backlightIsOn(true),
-    keyState(KeyState::RELEASE),
-    keyCandidate(KeyType::NONE),
-    keyConfirmed(KeyType::NONE),
-    keyInputCallback(dummyKeyInputCallback),
-    userData(nullptr)
+    backlightIsOn { true },
+    keyState { KeyState::RELEASE },
+    keyCandidate { KeyType::NONE },
+    keyConfirmed { KeyType::NONE },
+    keyInputCallback { dummyKeyInputCallback },
+    userData { nullptr }
 {
   /*EMPTY*/
 }
