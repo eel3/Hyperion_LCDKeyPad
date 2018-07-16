@@ -6,9 +6,9 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-LCDKeyPad	KEYWORD1	LCDKeyPad
-KeyType	KEYWORD1	KeyType
-KeyInputCallback	KEYWORD1	KeyInputCallback
+LCDKeyPad	KEYWORD1
+KeyType	KEYWORD1
+KeyInputCallback	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
